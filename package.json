@@ -1,0 +1,21 @@
+{
+  "name": "tsqlint",
+  "version": "0.1.0",
+  "description": "An AST-based pattern checker for SQL.",
+  "author": "ren-yamanashi",
+  "license": "Apache-2.0",
+  "keywords": [
+    "sql",
+    "lint",
+    "typescript"
+  ],
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "test": "vitest --run"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.21",
+    "typescript": "^5.8.3"
+  }
+}
