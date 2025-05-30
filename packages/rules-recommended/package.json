@@ -24,5 +24,6 @@
   },
   "files": [
     "dist"
-  ]
+  ],
+  "license": "Apache-2.0"
 }

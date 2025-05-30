@@ -13,5 +13,6 @@
     "tsqlint": "workspace:*",
     "@tsqlint/core": "workspace:*",
     "@tsqlint/rules-recommended": "workspace:*"
-  }
+  },
+  "license": "Apache-2.0"
 }
