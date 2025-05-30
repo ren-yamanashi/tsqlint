@@ -109,12 +109,18 @@ export class ConfigLoader implements ConfigFileLoader {
    * JavaScript/TypeScript設定ファイルを読み込み
    */
   private async loadJSConfig(configPath: string): Promise<Config> {
-    // ES Modules形式でのインポート
-    const configModule = await import(`file://${configPath}`);
+    let configModule;
+    try {
+      configModule = await import(`file://${configPath}`);
+    } catch (e: any) {
+      throw new Error(`Failed to import config file ${configPath}: ${e.message}`);
+    }
+
     const config = configModule.default || configModule;
     
     if (typeof config === "function") {
-      return defineConfig(config());
+      const executedConfig = config();
+      return defineConfig(executedConfig);
     }
     
     return defineConfig(config);

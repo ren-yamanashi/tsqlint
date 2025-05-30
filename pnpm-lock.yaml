@@ -24,6 +24,9 @@ importers:
 
   examples:
     dependencies:
+      '@tsqlint/core':
+        specifier: workspace:*
+        version: link:../packages/core
       '@tsqlint/rules-recommended':
         specifier: workspace:*
         version: link:../packages/rules-recommended

@@ -185,18 +185,21 @@ Table aim_contents.user_data violates naming convention
 
 ```ts
 import { defineConfig } from "@tsqlint/core";
-import recommended from "@tsqlint/rules-recommended";
-import customRule from "./rules/custom-rule";
+// import recommended from "@tsqlint/rules-recommended"; // 現状、JS/TS設定ファイル内での外部モジュールimportは動作不安定
+// import customRule from "./rules/custom-rule";         // 同上
 
 export default defineConfig({
   // ファイル対象（glob パターン）
   files: ["**/*.sql"],
   
   // ルール設定
-  rules: [
-    ...recommended.rules,
-    customRule,
-  ],
+  // 現状、JS/TS設定ファイルから他のモジュールをimportしてルールオブジェクトを直接参照する形式は
+  // 動作が不安定なため、JSONファイルと同様にルール名を文字列で指定することを推奨します。
+  rules: {
+    "no-select-star": "error",
+    "table-naming-convention": "warning",
+    // "custom-rule-name": "error", // カスタムルールも文字列で指定
+  },
   
   // パーサー設定
   parser: {
