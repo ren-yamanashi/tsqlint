@@ -1,0 +1,22 @@
+#!/usr/bin/env node
+
+import { cli } from "../dist/index.js";
+
+// エラーハンドリング
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+  process.exit(1);
+});
+
+process.on('uncaughtException', (error) => {
+  console.error('Uncaught Exception:', error);
+  process.exit(1);
+});
+
+// CLI実行
+cli.run().then(exitCode => {
+  process.exit(exitCode);
+}).catch(error => {
+  console.error('CLI Error:', error);
+  process.exit(1);
+});

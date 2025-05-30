@@ -1,0 +1,36 @@
+{
+  "name": "tsqlint",
+  "version": "0.1.0",
+  "description": "CLI for TSQLint - An AST-based SQL linter",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "bin": {
+    "tsqlint": "bin/tsqlint"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@tsqlint/core": "workspace:*",
+    "@tsqlint/rules-recommended": "workspace:*",
+    "commander": "^11.1.0",
+    "glob": "^10.4.5",
+    "picocolors": "^1.1.1"
+  },
+  "devDependencies": {
+    "@types/glob": "^8.1.0",
+    "@types/node": "^22.15.21",
+    "typescript": "^5.8.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist",
+    "bin"
+  ]
+}

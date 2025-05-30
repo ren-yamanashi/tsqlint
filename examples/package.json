@@ -1,0 +1,16 @@
+{
+  "name": "tsqlint-examples",
+  "version": "0.1.0",
+  "private": true,
+  "description": "TSQLint usage examples",
+  "type": "module",
+  "scripts": {
+    "lint": "tsqlint",
+    "lint:fix": "tsqlint --fix",
+    "lint:json": "tsqlint --format json"
+  },
+  "dependencies": {
+    "tsqlint": "workspace:*",
+    "@tsqlint/rules-recommended": "workspace:*"
+  }
+}

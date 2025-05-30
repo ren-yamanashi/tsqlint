@@ -5,11 +5,16 @@
   "main": "dist/index.js",
   "type": "module",
   "scripts": {
+    "build": "pnpm -r build",
+    "dev": "pnpm -r dev",
+    "clean": "pnpm -r exec rm -rf dist",
+    "lint": "node packages/cli/bin/tsqlint examples/**/*.sql",
     "test": "vitest --run"
   },
   "devDependencies": {
     "@types/node": "^22.15.21",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "vitest": "^1.0.0"
   },
   "dependencies": {
     "node-sql-parser": "^5.3.9"

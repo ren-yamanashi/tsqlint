@@ -1,5 +1,36 @@
 {
-    "cSpell.words": [
-        "tsqlint"
-    ]
+  "cSpell.words": ["tsqlint"],
+  "editor.tabSize": 2,
+  "editor.formatOnSave": true,
+  // GitHub Copilot settings
+  "chat.renderRelatedFiles": true,
+  "chat.agent.enabled": true,
+  "chat.mcp.discovery.enabled": true,
+  "github.copilot.chat.codesearch.enabled": true,
+  "github.copilot.chat.edits.temporalContext.enabled": true,
+  "github.copilot.chat.newWorkspaceCreation.enabled": true,
+  "github.copilot.chat.search.semanticTextResults": true,
+  "github.copilot.chat.agent.autoFix": true,
+  "github.copilot.chat.agent.runTasks": true,
+  "github.copilot.chat.agent.thinkingTool": true,
+  "github.copilot.editor.enableCodeActions": true,
+  "github.copilot.chat.generateTests.codeLens": true,
+  "github.copilot.chat.codeGeneration.useInstructionFiles": true
+  // "github.copilot.chat.codeGeneration.instructions": [
+  //   {
+  //     "file": ".github/.copilot-codeGeneration-instructions.md"
+  //   },
+  //   {
+  //     "file": ".github/.copilot-test-instructions.md"
+  //   },
+  //   {
+  //     "file": ".github/instructions/application.instructions.md"
+  //   },
+  //   {
+  //     "file": ".github/instructions/domain.instructions.md"
+  //   },
+  //   {
+  //     "file": ".github/instructions/infra.instructions.md"
+  //   }
+  // ]
 }
