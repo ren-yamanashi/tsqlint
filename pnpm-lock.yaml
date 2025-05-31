@@ -102,26 +102,26 @@ importers:
         specifier: ^8.1.0
         version: 8.1.0
       '@types/node':
-        specifier: ^22.15.21
+        specifier: catalog:others
         version: 22.15.21
       typescript:
-        specifier: ^5.8.3
+        specifier: catalog:core
         version: 5.8.3
 
   packages/core:
     dependencies:
       node-sql-parser:
-        specifier: ^5.3.9
+        specifier: catalog:core
         version: 5.3.9
     devDependencies:
       '@types/node':
-        specifier: ^22.15.21
+        specifier: catalog:others
         version: 22.15.21
       typescript:
-        specifier: ^5.8.3
+        specifier: catalog:core
         version: 5.8.3
       vitest:
-        specifier: ^3.1.4
+        specifier: catalog:test
         version: 3.1.4(@types/node@22.15.21)
 
   packages/rules-recommended:
@@ -131,13 +131,13 @@ importers:
         version: link:../core
     devDependencies:
       '@types/node':
-        specifier: ^22.15.21
+        specifier: catalog:others
         version: 22.15.21
       typescript:
-        specifier: ^5.8.3
+        specifier: catalog:core
         version: 5.8.3
       vitest:
-        specifier: ^3.1.4
+        specifier: catalog:test
         version: 3.1.4(@types/node@22.15.21)
 
 packages:
