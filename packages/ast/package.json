@@ -1,0 +1,24 @@
+{
+  "name": "@tsqlint/ast",
+  "version": "0.1.0",
+  "description": "AST for tsqlint",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint --config ../../eslint.config.mjs",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "typescript": "catalog:core",
+    "vitest": "catalog:test"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist"
+  ],
+  "license": "Apache-2.0"
+}
