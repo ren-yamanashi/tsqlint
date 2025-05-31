@@ -5,9 +5,7 @@
   "description": "TSQLint usage examples",
   "type": "module",
   "scripts": {
-    "lint": "tsqlint",
-    "lint:fix": "tsqlint --fix",
-    "lint:json": "tsqlint --format json"
+    "lint": "tsqlint"
   },
   "dependencies": {
     "tsqlint": "workspace:*",

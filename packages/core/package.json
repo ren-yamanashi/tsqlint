@@ -1,23 +1,22 @@
 {
   "name": "@tsqlint/core",
   "version": "0.1.0",
-  "description": "Core functionality for TSQLint",
+  "description": "Core functionality for tsqlint",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "type": "module",
   "scripts": {
     "build": "tsc",
-    "dev": "tsc --watch",
-    "test": "vitest run",
-    "test:watch": "vitest"
+    "lint": "eslint --config ../../eslint.config.mjs",
+    "test": "vitest run"
   },
   "dependencies": {
-    "node-sql-parser": "^5.3.9"
+    "node-sql-parser": "catalog:core"
   },
   "devDependencies": {
-    "@types/node": "^22.15.21",
-    "typescript": "^5.8.3",
-    "vitest": "^3.1.4"
+    "@types/node": "catalog:others",
+    "typescript": "catalog:core",
+    "vitest": "catalog:test"
   },
   "publishConfig": {
     "access": "public"

@@ -1,7 +1,23 @@
 {
-  "cSpell.words": ["tsqlint"],
+  "cSpell.words": [
+    "tsqlint",
+    "vitest",
+    "yamanashi"
+  ],
   "editor.tabSize": 2,
+  
+  // lint settings
+  "eslint.useFlatConfig": true,
+  
+  // auto format setting
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "javascript.preferences.importModuleSpecifier": "relative",
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "javascript.preferences.quoteStyle": "single",
+  "typescript.preferences.quoteStyle": "single",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
+
   // GitHub Copilot settings
   "chat.renderRelatedFiles": true,
   "chat.agent.enabled": true,

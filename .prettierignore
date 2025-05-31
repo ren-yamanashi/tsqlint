@@ -1,0 +1,7 @@
+dist
+coverage
+.vscode
+node_modules
+.nx
+pnpm-lock.yaml
+package-lock.json

@@ -1,3 +1,18 @@
 packages:
   - 'packages/*'
   - 'examples'
+
+catalogs:
+  core:
+    typescript: ^5.8.3
+    node-sql-parser: ^5.3.9
+  lint:
+    eslint: ^9.28.0
+    eslint-plugin-import: ^2.31.0
+    typescript-eslint: ^8.33.0
+  fmt:
+    prettier: 4.0.0-alpha.12
+  test:
+    vitest: ^3.1.4
+  others:
+    '@types/node': ^22.15.21

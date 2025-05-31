@@ -10,9 +10,8 @@
   },
   "scripts": {
     "build": "tsc",
-    "dev": "tsc --watch",
-    "test": "vitest run",
-    "test:watch": "vitest"
+    "lint": "npx nx lint",
+    "test": "vitest run"
   },
   "dependencies": {
     "@tsqlint/core": "workspace:*",
@@ -23,8 +22,8 @@
   },
   "devDependencies": {
     "@types/glob": "^8.1.0",
-    "@types/node": "^22.15.21",
-    "typescript": "^5.8.3"
+    "@types/node": "catalog:others",
+    "typescript": "catalog:core"
   },
   "publishConfig": {
     "access": "public"

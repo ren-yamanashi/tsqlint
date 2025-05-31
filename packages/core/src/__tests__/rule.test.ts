@@ -1,4 +1,5 @@
 import { describe, test, expect, vi } from 'vitest';
+
 import { createRule } from '../rule';
 
 describe('createRule', () => {

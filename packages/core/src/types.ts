@@ -1,4 +1,4 @@
-import type { AST } from "node-sql-parser";
+import type { AST } from 'node-sql-parser';
 
 // 基本的なAST型定義
 export interface ASTNode {
@@ -8,14 +8,14 @@ export interface ASTNode {
 
 // node-sql-parserのノード型を拡張
 export interface CreateNode extends ASTNode {
-  type: "create";
-  keyword: "table" | "index" | "view";
+  type: 'create';
+  keyword: 'table' | 'index' | 'view';
   table?: Array<{ db?: string; table: string }>;
   create_definitions?: ColumnDefinition[];
 }
 
 export interface SelectNode extends ASTNode {
-  type: "select";
+  type: 'select';
   columns: any;
   from?: any[];
   where?: any;
@@ -23,7 +23,7 @@ export interface SelectNode extends ASTNode {
 
 export interface ColumnDefinition {
   column: {
-    type: "column_ref";
+    type: 'column_ref';
     table: string | null;
     column: string;
   };
@@ -31,16 +31,16 @@ export interface ColumnDefinition {
     dataType: string;
     suffix?: string[];
   };
-  resource: "column";
+  resource: 'column';
   nullable?: {
-    type: "not null" | "null";
+    type: 'not null' | 'null';
     value: string;
   };
   auto_increment?: string;
   comment?: {
-    type: "comment";
+    type: 'comment';
     value: {
-      type: "single_quote_string";
+      type: 'single_quote_string';
       value: string;
     };
   };
@@ -67,8 +67,8 @@ export interface RuleDefinition<T extends Record<string, any> = {}> {
 
 export interface Rule<T extends Record<string, any> = {}> {
   name: string;
-  meta: RuleDefinition<T>["meta"];
-  create: RuleDefinition<T>["create"];
+  meta: RuleDefinition<T>['meta'];
+  create: RuleDefinition<T>['create'];
 }
 
 // ルールコンテキスト
@@ -103,7 +103,7 @@ export interface ConfigInput {
   files: string | string[];
   rules: Rule[] | Record<string, RuleConfig>;
   parser?: {
-    database?: "mysql" | "postgres" | "sqlite" | "mssql";
+    database?: 'mysql' | 'postgres' | 'sqlite' | 'mssql';
     options?: any;
   };
   env?: Record<string, any>;
@@ -114,21 +114,21 @@ export interface Config {
   files: string | string[];
   rules: Rule[];
   parser?: {
-    database?: "mysql" | "postgres" | "sqlite" | "mssql";
+    database?: 'mysql' | 'postgres' | 'sqlite' | 'mssql';
     options?: any;
   };
   env?: Record<string, any>;
 }
 
 // ルール設定型
-export type RuleConfig = 
-  | "off" 
-  | "error" 
-  | "warn" 
-  | "warning" 
-  | "info" 
-  | boolean 
-  | [MessageSeverity | "warn" | "warning", ...any[]];
+export type RuleConfig =
+  | 'off'
+  | 'error'
+  | 'warn'
+  | 'warning'
+  | 'info'
+  | boolean
+  | [MessageSeverity | 'warn' | 'warning', ...any[]];
 
 // リント結果
 export interface LintResult {
@@ -141,7 +141,7 @@ export interface LintResult {
 
 export interface LintMessage {
   ruleId: string;
-  severity: "error" | "warning" | "info";
+  severity: 'error' | 'warning' | 'info';
   message: string;
   line: number;
   column: number;
@@ -149,7 +149,7 @@ export interface LintMessage {
   nodeType?: string;
 }
 
-export type MessageSeverity = "error" | "warning" | "info";
+export type MessageSeverity = 'error' | 'warning' | 'info';
 
 // パーサー関連
 export interface ParseResult {
