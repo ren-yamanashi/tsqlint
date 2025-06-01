@@ -1,5 +1,5 @@
 import eslint from '@eslint/js';
-import eslintPluginImport from 'eslint-plugin-import';
+import importPlugin from 'eslint-plugin-import';
 import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
@@ -16,19 +16,16 @@ export default tseslint.config(
         tsconfigRootDir: import.meta.dirname,
       },
     },
-    plugins: {
-      import: eslintPluginImport,
-    },
     extends: [
+      importPlugin.flatConfigs.recommended,
       ...tseslint.configs.strictTypeChecked,
       ...tseslint.configs.stylisticTypeChecked,
     ],
     rules: {
+      'import/no-unresolved': 'off',
+      'import/named': 'off',
       '@typescript-eslint/consistent-type-definitions': 'off',
-      '@typescript-eslint/no-confusing-void-expression': [
-        'error',
-        { ignoreArrowShorthand: true },
-      ],
+      '@typescript-eslint/no-confusing-void-expression': ['error', { ignoreArrowShorthand: true }],
       '@typescript-eslint/no-floating-promises': 'error',
       '@typescript-eslint/no-unsafe-assignment': 'error',
       '@typescript-eslint/no-unsafe-call': 'error',
@@ -45,18 +42,7 @@ export default tseslint.config(
           'newlines-between': 'always',
         },
       ],
-      '@typescript-eslint/no-unused-vars': [
-        'error',
-        {
-          args: 'all',
-          argsIgnorePattern: '^_',
-          caughtErrors: 'all',
-          caughtErrorsIgnorePattern: '^_',
-          destructuredArrayIgnorePattern: '^_',
-          varsIgnorePattern: '^_',
-          ignoreRestSiblings: true,
-        },
-      ],
+      '@typescript-eslint/no-unused-vars': 'error',
     },
   },
   {
@@ -66,13 +52,6 @@ export default tseslint.config(
     },
   },
   {
-    ignores: [
-      'dist',
-      'node_modules',
-      '.vscode',
-      'package.json',
-      'vitest.config.ts',
-      '*.js',
-    ],
+    ignores: ['dist', 'node_modules', '.vscode', 'package.json', 'vitest.config.ts', '*.js'],
   },
 );

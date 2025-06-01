@@ -8,9 +8,7 @@ import nodeSqlParser from 'node-sql-parser';
 
 import { createColumnDefinition } from './column';
 
-export const generateCreateTableNode = (
-  node: nodeSqlParser.Create,
-): CreateTableNode => {
+export const generateCreateTableNode = (node: nodeSqlParser.Create): CreateTableNode => {
   const createDefinitions: CreateDefinition[] =
     node.create_definitions?.reduce<CreateDefinition[]>((acc, def) => {
       const columnDefinition = createColumnDefinition(def);

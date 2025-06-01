@@ -12,7 +12,7 @@ export interface ColumnRef extends Node<typeof NODE_TYPES.COLUMN_REF> {
   column_name: string;
 }
 
-interface AbstractColumn<T extends DataType> {
+export interface ColumnBase<T extends DataType> {
   column_ref: ColumnRef;
   data_type: T;
   comment: CommentNode | null;
@@ -21,21 +21,21 @@ interface AbstractColumn<T extends DataType> {
   // suffix: DataTypeSuffix[];
 }
 
-export interface Datetime extends AbstractColumn<typeof DATA_TYPES.DATETIME> {}
+export interface Datetime extends ColumnBase<typeof DATA_TYPES.DATETIME> {}
 
-export interface Tinyint extends AbstractColumn<typeof DATA_TYPES.TINYINT> {}
+export interface Tinyint extends ColumnBase<typeof DATA_TYPES.TINYINT> {}
 
-export interface Bigint extends AbstractColumn<typeof DATA_TYPES.BIGINT> {
+export interface Bigint extends ColumnBase<typeof DATA_TYPES.BIGINT> {
   unsigned: boolean;
   auto_increment: boolean;
 }
 
-export interface Varchar extends AbstractColumn<typeof DATA_TYPES.VARCHAR> {
+export interface Varchar extends ColumnBase<typeof DATA_TYPES.VARCHAR> {
   length: number | null;
   parentheses: boolean;
 }
 
-export interface Enum extends AbstractColumn<typeof DATA_TYPES.ENUM> {
+export interface Enum extends ColumnBase<typeof DATA_TYPES.ENUM> {
   expression_list: ExpressionListNode;
 }
 
