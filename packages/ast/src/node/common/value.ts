@@ -1,4 +1,4 @@
-import { Node, NODE_TYPES } from '../base';
+import { Node, NODE_TYPES } from './node';
 
 export const VALUE_TYPES = {
   SINGLE_QUOTE_STRING: 'single_quote_string',

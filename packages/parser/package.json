@@ -1,0 +1,33 @@
+{
+  "name": "@tsqlint/parser",
+  "version": "0.1.0",
+  "description": "AST for tsqlint",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "bin": {
+    "tsqlint": "bin/tsqlint"
+  },
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint --config ../../eslint.config.mjs",
+    "test": "vitest run",
+    "exec": "npx tsx src/index.ts --noEmit"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.4",
+    "typescript": "catalog:core",
+    "vitest": "catalog:test"
+  },
+  "dependencies": {
+    "@tsqlint/ast": "workspace:*",
+    "node-sql-parser": "catalog:core"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist"
+  ],
+  "license": "Apache-2.0"
+}

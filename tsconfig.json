@@ -3,6 +3,8 @@
   "references": [
     { "path": "./packages/core" },
     { "path": "./packages/cli" },
-    { "path": "./packages/rules-recommended" }
+    { "path": "./packages/rules-recommended" },
+    { "path": "./packages/ast" },
+    { "path": "./packages/parser" }
   ]
 }

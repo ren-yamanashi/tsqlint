@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-empty-object-type */
-import { Node, NODE_TYPES } from '../base';
+
 import { DATA_TYPES, DataType } from '../common/data-type';
+import { Node, NODE_TYPES } from '../common/node';
 import {
   CommentNode,
   DefaultValueNode,

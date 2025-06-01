@@ -1,6 +1,6 @@
-import { Node, NODE_TYPES } from '../base';
-import { CommentNode } from '../common/value';
-import { DataType, DataTypeSuffix } from '../common/data-type';
+import { Node, NODE_TYPES } from '../common/node';
+
+import { CreateDefinition } from './column-definition';
 
 /**
  * MySQL CREATE node types.
@@ -21,27 +21,5 @@ export interface CreateTableNode extends Node<typeof NODE_TYPES.CREATE> {
   table_name: string;
   temporary: boolean;
   if_not_exists: boolean;
-  definitions: unknown[];
+  definitions: CreateDefinition[];
 }
-
-interface CreateColumnDefinition {
-  type: 'column_definition';
-  column: {
-    type: 'column_ref';
-    column_name: string;
-  };
-  definition: {
-    data_type: DataType;
-    suffix: DataTypeSuffix[];
-  };
-  nullable: boolean;
-  auto_increment: boolean;
-  comment: CommentNode;
-}
-
-interface ColumnValue {}
-
-// interface CreateLikeNode extends Node<typeof NODE_TYPES.CREATE> {
-//   table: string;
-//   parentheses: boolean;
-// }

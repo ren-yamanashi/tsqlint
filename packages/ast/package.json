@@ -6,13 +6,13 @@
   "types": "dist/index.d.ts",
   "type": "module",
   "scripts": {
-    "build": "tsc",
+    "build": "tsdown",
     "lint": "eslint --config ../../eslint.config.mjs",
     "test": "vitest run"
   },
   "devDependencies": {
-    "typescript": "catalog:core",
-    "vitest": "catalog:test"
+    "tsdown": "^0.12.5",
+    "typescript": "catalog:core"
   },
   "publishConfig": {
     "access": "public"

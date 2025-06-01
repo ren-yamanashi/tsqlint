@@ -3,3 +3,5 @@ dist
 .nx
 tsconfig.tsbuildinfo
 workspace
+sample.sql
+ast.json
