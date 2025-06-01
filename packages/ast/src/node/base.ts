@@ -1,6 +1,9 @@
 export const NODE_TYPES = {
   CREATE: 'create',
-  LIKE: 'like',
+  COMMENT: 'comment',
+  DEFAULT_VAL: 'default_val',
+  EXPRESSION_LIST: 'expression_list',
+  COLUMN_REF: 'column_ref',
 } as const;
 
 export type NodeType = (typeof NODE_TYPES)[keyof typeof NODE_TYPES];
