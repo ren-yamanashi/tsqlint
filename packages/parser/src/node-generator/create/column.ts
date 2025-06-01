@@ -6,6 +6,7 @@ import {
   CommentNode,
   DATA_TYPES,
   Datetime,
+  DefaultValueNode,
   Enum,
   NODE_TYPES,
   Tinyint,
@@ -17,6 +18,12 @@ import nodeSqlParser from 'node-sql-parser';
 
 import { UnwrapArray } from '../../types/unwrap-array';
 
+type ExtractColumnDefinition<T> = T extends { resource: 'column' } ? T : never;
+
+type ColumnDefinitionNode = ExtractColumnDefinition<
+  UnwrapArray<NonNullable<nodeSqlParser.Create['create_definitions']>>
+>;
+
 export const createColumnDefinition = (
   node: UnwrapArray<nodeSqlParser.Create['create_definitions']>,
 ): CreateColumnDefinition | null => {
@@ -24,60 +31,12 @@ export const createColumnDefinition = (
     case 'column': {
       const definition = node.definition;
       const dataType = definition.dataType.toLowerCase();
-
-      const columnName =
-        node.column.type === 'column_ref' ? node.column.column : null;
-
-      const comment = node.comment
-        ? (node.comment.value as unknown as nodeSqlParser.ValueExpr)
-        : null;
-
-      const defaultVal = node.default_val
-        ? (node.default_val.value as nodeSqlParser.ValueExpr)
-        : null;
-
-      if (!columnName) {
-        throw new Error('Column name is required for BIGINT type');
-      }
-
+      const commentNode = generateCommentNode(node);
+      const defaultValueNode = generateDefaultValueNode(node);
       const columnRef: ColumnRef = {
         type: 'column_ref',
-        column_name:
-          typeof columnName === 'string'
-            ? columnName
-            : String(columnName.expr.value),
+        column_name: getColumnName(node.column),
       };
-
-      const commentNode: CommentNode | null = comment
-        ? {
-            type: NODE_TYPES.COMMENT,
-            value: {
-              type:
-                comment.type === 'single_quote_string'
-                  ? VALUE_TYPES.SINGLE_QUOTE_STRING
-                  : VALUE_TYPES.DOUBLE_QUOTE_STRING,
-              value: String(comment.value),
-            },
-          }
-        : null;
-
-      const defaultValueNode = defaultVal
-        ? {
-            type: NODE_TYPES.DEFAULT_VAL,
-            value: {
-              type:
-                // TODO: より厳密に
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-ignore
-                defaultVal.type === 'number'
-                  ? VALUE_TYPES.NUMBER
-                  : defaultVal.type === 'double_quote_string'
-                    ? VALUE_TYPES.DOUBLE_QUOTE_STRING
-                    : VALUE_TYPES.SINGLE_QUOTE_STRING,
-              value: defaultVal.value,
-            },
-          }
-        : null;
 
       switch (dataType) {
         case DATA_TYPES.DATETIME: {
@@ -181,4 +140,66 @@ export const createColumnDefinition = (
     default:
       return null;
   }
+};
+
+const getColumnName = (column: nodeSqlParser.ColumnRef): string => {
+  const columnName = column.type === 'column_ref' ? column.column : null;
+  if (!columnName) return '';
+  if (typeof columnName === 'string') return columnName;
+  return String(columnName.expr.value);
+};
+
+const generateCommentNode = (
+  node: ColumnDefinitionNode,
+): CommentNode | null => {
+  // NOTE: nodeSqlParser の型定義では `node.comment` は string 型だが、実際には ValueExpr 型であるため、`as unknown as ValueExpr` を使用
+  const comment = node.comment
+    ? (node.comment.value as unknown as nodeSqlParser.ValueExpr)
+    : null;
+
+  if (!comment) return null;
+
+  return {
+    type: NODE_TYPES.COMMENT,
+    value: {
+      type:
+        comment.type === 'single_quote_string'
+          ? VALUE_TYPES.SINGLE_QUOTE_STRING
+          : VALUE_TYPES.DOUBLE_QUOTE_STRING,
+      value: String(comment.value),
+    },
+  };
+};
+
+const generateDefaultValueNode = (
+  node: ColumnDefinitionNode,
+): DefaultValueNode | null => {
+  const defaultVal = node.default_val
+    ? (node.default_val.value as nodeSqlParser.ValueExpr)
+    : null;
+
+  if (!defaultVal) return null;
+
+  const type =
+    // NOTE: `defaultVal.type` は実際には `number` になることがあるため、`@ts-ignore` を使用
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    defaultVal.type === 'number'
+      ? VALUE_TYPES.NUMBER
+      : defaultVal.type === 'double_quote_string'
+        ? VALUE_TYPES.DOUBLE_QUOTE_STRING
+        : VALUE_TYPES.SINGLE_QUOTE_STRING;
+
+  // NOTE: `type` で無理やり条件に一致しない場合を `VALUE_TYPES.SINGLE_QUOTE_STRING` に丸め込んでいる
+  //       そのため、`type` が `VALUE_TYPES.SINGLE_QUOTE_STRING` の場合かつ、`defaultVal.value` が文字列でない場合は文字列に変換
+  const value =
+    type === VALUE_TYPES.SINGLE_QUOTE_STRING &&
+    typeof defaultVal.value !== 'string'
+      ? String(defaultVal.value)
+      : defaultVal.value;
+
+  return {
+    type: NODE_TYPES.DEFAULT_VAL,
+    value: { type, value },
+  };
 };
