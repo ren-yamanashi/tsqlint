@@ -31,7 +31,7 @@ export interface Bigint extends AbstractColumn<typeof DATA_TYPES.BIGINT> {
 }
 
 export interface Varchar extends AbstractColumn<typeof DATA_TYPES.VARCHAR> {
-  length: number;
+  length: number | null;
   parentheses: boolean;
 }
 

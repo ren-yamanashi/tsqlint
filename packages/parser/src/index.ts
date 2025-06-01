@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as fs from 'node:fs';
 
 import {
@@ -5,13 +6,17 @@ import {
   ColumnRef,
   CommentNode,
   DATA_TYPES,
+  Datetime,
+  Enum,
   NODE_TYPES,
+  Tinyint,
   VALUE_TYPES,
+  Varchar,
   type CreateColumnDefinition,
   type CreateDefinition,
   type CreateTableNode,
 } from '@tsqlint/ast';
-import nodeSqlParser, { ValueExpr } from 'node-sql-parser';
+import nodeSqlParser from 'node-sql-parser';
 
 // eslint-disable-next-line @typescript-eslint/array-type
 type UnwrapArray<T> = T extends Array<infer A> | ReadonlyArray<infer A>
@@ -69,11 +74,11 @@ function createColumnDefinition(
         node.column.type === 'column_ref' ? node.column.column : null;
 
       const comment = node.comment
-        ? (node.comment.value as unknown as ValueExpr)
+        ? (node.comment.value as unknown as nodeSqlParser.ValueExpr)
         : null;
 
       const defaultVal = node.default_val
-        ? (node.default_val.value as ValueExpr)
+        ? (node.default_val.value as nodeSqlParser.ValueExpr)
         : null;
 
       if (!columnName) {
@@ -106,7 +111,10 @@ function createColumnDefinition(
             type: NODE_TYPES.DEFAULT_VAL,
             value: {
               type:
-                defaultVal.value === 'number'
+                // TODO: より厳密に
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
+                defaultVal.type === 'number'
                   ? VALUE_TYPES.NUMBER
                   : defaultVal.type === 'double_quote_string'
                     ? VALUE_TYPES.DOUBLE_QUOTE_STRING
@@ -117,6 +125,32 @@ function createColumnDefinition(
         : null;
 
       switch (dataType) {
+        case DATA_TYPES.DATETIME: {
+          const datetimeColumn: Datetime = {
+            column_ref: columnRef,
+            data_type: DATA_TYPES.DATETIME,
+            comment: commentNode,
+            default_val: defaultValueNode,
+            nullable: !node.nullable,
+          };
+          return {
+            type: 'column_definition',
+            column: datetimeColumn,
+          };
+        }
+        case DATA_TYPES.TINYINT: {
+          const tinyintColumn: Tinyint = {
+            column_ref: columnRef,
+            data_type: DATA_TYPES.TINYINT,
+            comment: commentNode,
+            default_val: defaultValueNode,
+            nullable: !node.nullable,
+          };
+          return {
+            type: 'column_definition',
+            column: tinyintColumn,
+          };
+        }
         case DATA_TYPES.BIGINT: {
           const bigintColumn: Bigint = {
             column_ref: columnRef,
@@ -134,7 +168,57 @@ function createColumnDefinition(
             column: bigintColumn,
           };
         }
-
+        case DATA_TYPES.VARCHAR: {
+          const varcharColumn: Varchar = {
+            column_ref: columnRef,
+            data_type: DATA_TYPES.VARCHAR,
+            comment: commentNode,
+            default_val: defaultValueNode,
+            nullable: !node.nullable,
+            length: definition.length ?? null,
+            parentheses: !!definition.parentheses,
+          };
+          return {
+            type: 'column_definition',
+            column: varcharColumn,
+          };
+        }
+        case DATA_TYPES.ENUM: {
+          const enumColumn: Enum = {
+            column_ref: columnRef,
+            data_type: DATA_TYPES.ENUM,
+            comment: commentNode,
+            default_val: defaultValueNode,
+            nullable: !node.nullable,
+            expression_list: {
+              type: NODE_TYPES.EXPRESSION_LIST,
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+              value:
+                definition.dataType === 'ENUM'
+                  ? // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+                    (definition as unknown as any).expr.value.map(
+                      (val: nodeSqlParser.ValueExpr) => {
+                        const valueType =
+                          // TODO: より厳密に
+                          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                          // @ts-ignore
+                          val.type === 'number'
+                            ? VALUE_TYPES.NUMBER
+                            : val.type === 'double_quote_string'
+                              ? VALUE_TYPES.DOUBLE_QUOTE_STRING
+                              : VALUE_TYPES.SINGLE_QUOTE_STRING;
+                        return { type: valueType, value: val.value };
+                      },
+                    )
+                  : [],
+              parentheses: !!definition.parentheses,
+            },
+          };
+          return {
+            type: 'column_definition',
+            column: enumColumn,
+          };
+        }
         default:
           return null;
       }
