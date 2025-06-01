@@ -9,19 +9,20 @@
     "tsqlint": "bin/tsqlint"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsdown",
     "lint": "eslint --config ../../eslint.config.mjs",
     "test": "vitest run",
     "exec": "npx tsx src/index.ts --noEmit"
   },
-  "devDependencies": {
-    "tsx": "^4.19.4",
-    "typescript": "catalog:core",
-    "vitest": "catalog:test"
-  },
   "dependencies": {
     "@tsqlint/ast": "workspace:*",
     "node-sql-parser": "catalog:core"
+  },
+  "devDependencies": {
+    "tsx": "catalog:others",
+    "typescript": "catalog:core",
+    "vitest": "catalog:test",
+    "tsdown": "catalog:others"
   },
   "publishConfig": {
     "access": "public"

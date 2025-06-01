@@ -9,7 +9,7 @@
     "tsqlint": "bin/tsqlint"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsdown",
     "lint": "npx nx lint",
     "test": "vitest run"
   },
@@ -23,7 +23,8 @@
   "devDependencies": {
     "@types/glob": "^8.1.0",
     "@types/node": "catalog:others",
-    "typescript": "catalog:core"
+    "typescript": "catalog:core",
+    "tsdown": "catalog:others"
   },
   "publishConfig": {
     "access": "public"

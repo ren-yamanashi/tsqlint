@@ -30,6 +30,12 @@ catalogs:
     '@types/node':
       specifier: ^22.15.21
       version: 22.15.21
+    tsdown:
+      specifier: ^0.12.5
+      version: 0.12.5
+    tsx:
+      specifier: ^4.19.4
+      version: 4.19.4
   test:
     vitest:
       specifier: ^3.1.4
@@ -83,7 +89,7 @@ importers:
   packages/ast:
     devDependencies:
       tsdown:
-        specifier: ^0.12.5
+        specifier: catalog:others
         version: 0.12.5(typescript@5.8.3)
       typescript:
         specifier: catalog:core
@@ -113,6 +119,9 @@ importers:
       '@types/node':
         specifier: catalog:others
         version: 22.15.21
+      tsdown:
+        specifier: catalog:others
+        version: 0.12.5(typescript@5.8.3)
       typescript:
         specifier: catalog:core
         version: 5.8.3
@@ -126,6 +135,9 @@ importers:
       '@types/node':
         specifier: catalog:others
         version: 22.15.21
+      tsdown:
+        specifier: catalog:others
+        version: 0.12.5(typescript@5.8.3)
       typescript:
         specifier: catalog:core
         version: 5.8.3
@@ -142,8 +154,11 @@ importers:
         specifier: catalog:core
         version: 5.3.9
     devDependencies:
+      tsdown:
+        specifier: catalog:others
+        version: 0.12.5(typescript@5.8.3)
       tsx:
-        specifier: ^4.19.4
+        specifier: catalog:others
         version: 4.19.4
       typescript:
         specifier: catalog:core
@@ -161,6 +176,9 @@ importers:
       '@types/node':
         specifier: catalog:others
         version: 22.15.21
+      tsdown:
+        specifier: catalog:others
+        version: 0.12.5(typescript@5.8.3)
       typescript:
         specifier: catalog:core
         version: 5.8.3

@@ -11,7 +11,7 @@
     "test": "vitest run"
   },
   "devDependencies": {
-    "tsdown": "^0.12.5",
+    "tsdown": "catalog:others",
     "typescript": "catalog:core"
   },
   "publishConfig": {
