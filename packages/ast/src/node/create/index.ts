@@ -23,3 +23,5 @@ export interface CreateTableNode extends Node<typeof NODE_TYPES.CREATE> {
   if_not_exists: boolean;
   definitions: CreateDefinition[];
 }
+
+export * from './column-definition';

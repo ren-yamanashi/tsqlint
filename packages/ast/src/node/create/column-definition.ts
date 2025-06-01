@@ -8,7 +8,7 @@ import {
   ExpressionListNode,
 } from '../common/value';
 
-interface ColumnRef extends Node<typeof NODE_TYPES.COLUMN_REF> {
+export interface ColumnRef extends Node<typeof NODE_TYPES.COLUMN_REF> {
   column_name: string;
 }
 
@@ -21,32 +21,32 @@ interface AbstractColumn<T extends DataType> {
   // suffix: DataTypeSuffix[];
 }
 
-interface Datetime extends AbstractColumn<typeof DATA_TYPES.DATETIME> {}
+export interface Datetime extends AbstractColumn<typeof DATA_TYPES.DATETIME> {}
 
-interface Tinyint extends AbstractColumn<typeof DATA_TYPES.TINYINT> {}
+export interface Tinyint extends AbstractColumn<typeof DATA_TYPES.TINYINT> {}
 
-interface Bigint extends AbstractColumn<typeof DATA_TYPES.BIGINT> {
+export interface Bigint extends AbstractColumn<typeof DATA_TYPES.BIGINT> {
   unsigned: boolean;
   auto_increment: boolean;
 }
 
-interface Varchar extends AbstractColumn<typeof DATA_TYPES.VARCHAR> {
+export interface Varchar extends AbstractColumn<typeof DATA_TYPES.VARCHAR> {
   length: number;
   parentheses: boolean;
 }
 
-interface Enum extends AbstractColumn<typeof DATA_TYPES.ENUM> {
+export interface Enum extends AbstractColumn<typeof DATA_TYPES.ENUM> {
   expression_list: ExpressionListNode;
 }
 
-type Column = Bigint | Varchar | Tinyint | Enum | Datetime;
+export type Column = Bigint | Varchar | Tinyint | Enum | Datetime;
 
-interface CreateColumnDefinition {
+export interface CreateColumnDefinition {
   type: 'column_definition';
   column: Column;
 }
 
-interface CreateConstraintPrimary {
+export interface CreateConstraintPrimary {
   type: 'constraint_primary';
   column_name: ColumnRef[];
 }

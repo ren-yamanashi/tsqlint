@@ -10,7 +10,9 @@ export type ValueType = (typeof VALUE_TYPES)[keyof typeof VALUE_TYPES];
 
 export interface CommentNode extends Node<typeof NODE_TYPES.COMMENT> {
   value: {
-    type: ValueType;
+    type:
+      | typeof VALUE_TYPES.SINGLE_QUOTE_STRING
+      | typeof VALUE_TYPES.DOUBLE_QUOTE_STRING;
     value: string;
   };
 }
