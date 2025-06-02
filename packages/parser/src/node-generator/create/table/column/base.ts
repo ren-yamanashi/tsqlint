@@ -5,7 +5,6 @@ import {
   Comment,
   DefaultVal,
   NODE_TYPES,
-  NodeType,
   VALUE_TYPES,
 } from '@tsqlint/ast';
 import nodeSqlParser from 'node-sql-parser';
@@ -14,13 +13,13 @@ import { ColumnDefinitionNode } from './types/column-definition-node';
 
 export const generateColumnBase =
   (node: ColumnDefinitionNode) =>
-  <T extends NodeType, U extends ColumnDataType>(nodeType: T, dataType: U): ColumnBase<T, U> => {
+  <T extends ColumnDataType>(dataType: T): ColumnBase<T> => {
     const columnRef: ColumnRef = {
       node_type: 'column_ref',
       column_name: getColumnName(node.column),
     };
     return {
-      node_type: nodeType,
+      node_type: NODE_TYPES.COLUMN,
       column_ref: columnRef,
       data_type: dataType,
       comment: generateCommentNode(node),

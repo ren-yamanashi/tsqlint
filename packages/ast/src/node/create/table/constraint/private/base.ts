@@ -1,8 +1,8 @@
-import { NodeType } from '../../../../shared/node-type';
+import { NODE_TYPES } from '../../../../shared/node-type';
 
 import { ConstraintType } from './constraint-type';
 
-export interface ConstraintBase<T extends NodeType, U extends ConstraintType> {
-  node_type: T;
-  constraint_type: U;
+export interface ConstraintBase<T extends ConstraintType> {
+  node_type: typeof NODE_TYPES.CONSTRAINT;
+  constraint_type: T;
 }

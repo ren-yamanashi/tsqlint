@@ -13,7 +13,6 @@ export interface ExpressionListNode {
   parentheses: boolean;
 }
 
-export interface EnumColumn
-  extends ColumnBase<typeof NODE_TYPES.ENUM_COLUMN, typeof COLUMN_DATA_TYPES.ENUM> {
+export interface EnumColumn extends ColumnBase<typeof COLUMN_DATA_TYPES.ENUM> {
   expression_list: ExpressionListNode;
 }

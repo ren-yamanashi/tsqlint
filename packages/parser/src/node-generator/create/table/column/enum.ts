@@ -13,7 +13,7 @@ import { ColumnDefinitionNode } from './types/column-definition-node';
 export const generateEnumColumn = (node: ColumnDefinitionNode): EnumColumn => {
   const base = generateColumnBase(node);
   return {
-    ...base(NODE_TYPES.ENUM_COLUMN, COLUMN_DATA_TYPES.ENUM),
+    ...base(COLUMN_DATA_TYPES.ENUM),
     expression_list: getExpressionList(node.definition),
   };
 };
