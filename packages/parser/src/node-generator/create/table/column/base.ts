@@ -1,10 +1,11 @@
 import {
   ColumnBase,
+  ColumnDataType,
   ColumnRef,
-  CommentNode,
-  DataType,
-  DefaultValueNode,
+  Comment,
+  DefaultVal,
   NODE_TYPES,
+  NodeType,
   VALUE_TYPES,
 } from '@tsqlint/ast';
 import nodeSqlParser from 'node-sql-parser';
@@ -13,12 +14,13 @@ import { ColumnDefinitionNode } from './types/column-definition-node';
 
 export const generateColumnBase =
   (node: ColumnDefinitionNode) =>
-  <T extends DataType>(dataType: T): ColumnBase<T> => {
+  <T extends NodeType, U extends ColumnDataType>(nodeType: T, dataType: U): ColumnBase<T, U> => {
     const columnRef: ColumnRef = {
-      type: 'column_ref',
+      node_type: 'column_ref',
       column_name: getColumnName(node.column),
     };
     return {
+      node_type: nodeType,
       column_ref: columnRef,
       data_type: dataType,
       comment: generateCommentNode(node),
@@ -34,18 +36,14 @@ const getColumnName = (column: nodeSqlParser.ColumnRef): string => {
   return String(columnName.expr.value);
 };
 
-const generateCommentNode = (
-  node: ColumnDefinitionNode,
-): CommentNode | null => {
+const generateCommentNode = (node: ColumnDefinitionNode): Comment | null => {
   // NOTE: nodeSqlParser の型定義では `node.comment` は string 型だが、実際には ValueExpr 型であるため、`as unknown as ValueExpr` を使用
-  const comment = node.comment
-    ? (node.comment.value as unknown as nodeSqlParser.ValueExpr)
-    : null;
+  const comment = node.comment ? (node.comment.value as unknown as nodeSqlParser.ValueExpr) : null;
 
   if (!comment) return null;
 
   return {
-    type: NODE_TYPES.COMMENT,
+    node_type: NODE_TYPES.COMMENT,
     value: {
       type:
         comment.type === 'single_quote_string'
@@ -56,12 +54,8 @@ const generateCommentNode = (
   };
 };
 
-const generateDefaultValueNode = (
-  node: ColumnDefinitionNode,
-): DefaultValueNode | null => {
-  const defaultVal = node.default_val
-    ? (node.default_val.value as nodeSqlParser.ValueExpr)
-    : null;
+const generateDefaultValueNode = (node: ColumnDefinitionNode): DefaultVal | null => {
+  const defaultVal = node.default_val ? (node.default_val.value as nodeSqlParser.ValueExpr) : null;
 
   if (!defaultVal) return null;
 
@@ -78,13 +72,12 @@ const generateDefaultValueNode = (
   // NOTE: `type` で無理やり条件に一致しない場合を `VALUE_TYPES.SINGLE_QUOTE_STRING` に丸め込んでいる
   //       そのため、`type` が `VALUE_TYPES.SINGLE_QUOTE_STRING` の場合かつ、`defaultVal.value` が文字列でない場合は文字列に変換
   const value =
-    type === VALUE_TYPES.SINGLE_QUOTE_STRING &&
-    typeof defaultVal.value !== 'string'
+    type === VALUE_TYPES.SINGLE_QUOTE_STRING && typeof defaultVal.value !== 'string'
       ? String(defaultVal.value)
       : defaultVal.value;
 
   return {
-    type: NODE_TYPES.DEFAULT_VAL,
+    node_type: NODE_TYPES.DEFAULT_VAL,
     value: { type, value },
   };
 };
