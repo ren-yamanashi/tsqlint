@@ -13,6 +13,7 @@
     "test": "nx run-many --target=test --all"
   },
   "devDependencies": {
+    "@eslint/js": "catalog:lint",
     "@types/node": "catalog:others",
     "eslint": "catalog:lint",
     "eslint-plugin-import": "catalog:lint",

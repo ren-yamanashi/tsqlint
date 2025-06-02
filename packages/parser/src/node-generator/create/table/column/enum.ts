@@ -1,17 +1,26 @@
-import { DATA_TYPES, Enum, ExpressionListNode, NODE_TYPES, VALUE_TYPES } from '@tsqlint/ast';
+import {
+  COLUMN_DATA_TYPES,
+  EnumColumn,
+  ExpressionListNode,
+  NODE_TYPES,
+  VALUE_TYPES,
+} from '@tsqlint/ast';
 import nodeSqlParser from 'node-sql-parser';
 
 import { generateColumnBase } from './base';
 import { ColumnDefinitionNode } from './types/column-definition-node';
 
-export const generateEnumColumn = (node: ColumnDefinitionNode): Enum => {
+export const generateEnumColumn = (node: ColumnDefinitionNode): EnumColumn => {
   const base = generateColumnBase(node);
-  return { ...base(DATA_TYPES.ENUM), expression_list: getExpressionList(node.definition) };
+  return {
+    ...base(NODE_TYPES.ENUM_COLUMN, COLUMN_DATA_TYPES.ENUM),
+    expression_list: getExpressionList(node.definition),
+  };
 };
 
 const getExpressionList = (definition: ColumnDefinitionNode['definition']): ExpressionListNode => {
   return {
-    type: NODE_TYPES.EXPRESSION_LIST,
+    node_type: NODE_TYPES.EXPRESSION_LIST,
     parentheses: !!definition.dataType,
     value: getDefinitionValue(definition),
   };

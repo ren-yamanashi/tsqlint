@@ -8,6 +8,7 @@ catalogs:
     node-sql-parser: ^5.3.9
   lint:
     eslint: ^9.28.0
+    '@eslint/js': ^9.28.0
     eslint-plugin-import: ^2.31.0
     typescript-eslint: ^8.33.0
   fmt:
