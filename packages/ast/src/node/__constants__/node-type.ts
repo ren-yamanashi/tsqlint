@@ -8,6 +8,7 @@ export const NODE_TYPES = {
   COLUMN_DEFINITION: 'column_definition',
   CONSTRAINT: 'constraint',
   CONSTRAINT_DEFINITION: 'constraint_definition',
+  FOREIGN_KEY_REFERENCE_DEFINITION: 'foreign_key_reference_definition',
 } as const;
 
 export type NodeType = (typeof NODE_TYPES)[keyof typeof NODE_TYPES];

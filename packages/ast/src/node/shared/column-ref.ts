@@ -1,4 +1,4 @@
-import { NODE_TYPES } from './node-type';
+import { NODE_TYPES } from '../__constants__/node-type';
 
 export interface ColumnRef {
   node_type: typeof NODE_TYPES.COLUMN_REF;

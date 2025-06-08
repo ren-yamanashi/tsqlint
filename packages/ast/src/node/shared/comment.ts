@@ -1,5 +1,5 @@
-import { NODE_TYPES } from './node-type';
-import { VALUE_TYPES } from './value';
+import { NODE_TYPES } from '../__constants__/node-type';
+import { VALUE_TYPES } from '../__constants__/value-type';
 
 export interface Comment {
   node_type: typeof NODE_TYPES.COMMENT;

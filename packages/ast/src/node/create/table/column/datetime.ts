@@ -1,5 +1,18 @@
-import { ColumnBase } from './private/base';
-import { COLUMN_DATA_TYPES } from './private/data-type';
+import { NODE_TYPES } from '../../../__constants__/node-type';
+import { ColumnRef } from '../../../shared/column-ref';
+import { Comment } from '../../../shared/comment';
+import { DefaultVal } from '../../../shared/default-val';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface DatetimeColumn extends ColumnBase<typeof COLUMN_DATA_TYPES.DATETIME> {}
+import { COLUMN_DATA_TYPES } from './__constants__/data-type';
+
+/**
+ * @implements {ColumnBase}
+ */
+export type DatetimeColumn = {
+  node_type: typeof NODE_TYPES.COLUMN;
+  column_ref: ColumnRef;
+  data_type: typeof COLUMN_DATA_TYPES.DATETIME;
+  comment: Comment | null;
+  default_val: DefaultVal | null;
+  nullable: boolean;
+};

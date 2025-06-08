@@ -6,13 +6,16 @@ import {
 } from '@tsqlint/ast';
 import nodeSqlParser from 'node-sql-parser';
 
+import { UnwrapArray } from '../../../common/types/unwrap-array';
+
 import { generateColumnDefinition } from './column';
+import { generateConstraintDefinition } from './constraint';
 
 export const generateCreateTableNode = (node: nodeSqlParser.Create): CreateTableNode => {
   const createTableDefinitions: CreateTableDefinition[] =
     node.create_definitions?.reduce<CreateTableDefinition[]>((acc, def) => {
-      const columnDefinition = generateColumnDefinition(def);
-      if (columnDefinition) return [...acc, columnDefinition];
+      const definition = generateCreateTableDefinition(def);
+      if (definition) return [...acc, definition];
       return acc;
     }, []) ?? [];
   return {
@@ -24,4 +27,19 @@ export const generateCreateTableNode = (node: nodeSqlParser.Create): CreateTable
     if_not_exists: !!node.if_not_exists,
     definitions: createTableDefinitions,
   };
+};
+
+const generateCreateTableDefinition = (
+  node: UnwrapArray<nodeSqlParser.Create['create_definitions']>,
+): CreateTableDefinition | null => {
+  switch (node.resource) {
+    case 'column': {
+      return generateColumnDefinition(node);
+    }
+    case 'constraint': {
+      return generateConstraintDefinition(node);
+    }
+    default:
+      return null;
+  }
 };

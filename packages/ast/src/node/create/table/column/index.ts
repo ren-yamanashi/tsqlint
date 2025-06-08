@@ -1,4 +1,4 @@
-import { NODE_TYPES } from '../../../shared/node-type';
+import { NODE_TYPES } from '../../../__constants__/node-type';
 
 import { BigintColumn } from './bigint';
 import { DatetimeColumn } from './datetime';
@@ -11,10 +11,10 @@ export interface ColumnDefinition {
   column: BigintColumn | VarcharColumn | TinyintColumn | EnumColumn | DatetimeColumn;
 }
 
+export * from './__constants__/data-type';
+export * from './base';
 export * from './bigint';
 export * from './datetime';
 export * from './enum';
-export * from './private/base';
-export * from './private/data-type';
 export * from './tinyint';
 export * from './varchar';

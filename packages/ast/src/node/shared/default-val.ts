@@ -1,5 +1,5 @@
-import { NODE_TYPES } from './node-type';
-import { ValueType } from './value';
+import { NODE_TYPES } from '../__constants__/node-type';
+import { ValueType } from '../__constants__/value-type';
 
 export interface DefaultVal {
   node_type: typeof NODE_TYPES.DEFAULT_VAL;

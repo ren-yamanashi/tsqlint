@@ -1,5 +1,5 @@
 export const CONSTRAINT_TYPES = {
-  PRIMARY: 'primary',
+  PRIMARY_KEY: 'primary_key',
   FOREIGN_KEY: 'foreign_key',
 } as const;
 

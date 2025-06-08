@@ -9,11 +9,13 @@ import {
 } from '@tsqlint/ast';
 import nodeSqlParser from 'node-sql-parser';
 
+import { getColumnName } from '../../../../common/get-column-name';
+
 import { ColumnDefinitionNode } from './types/column-definition-node';
 
 export const generateColumnBase =
   (node: ColumnDefinitionNode) =>
-  <T extends ColumnDataType>(dataType: T): ColumnBase<T> => {
+  <T extends ColumnDataType>(dataType: T): Omit<ColumnBase, 'data_type'> & { data_type: T } => {
     const columnRef: ColumnRef = {
       node_type: 'column_ref',
       column_name: getColumnName(node.column),
@@ -27,13 +29,6 @@ export const generateColumnBase =
       nullable: !!node.nullable,
     };
   };
-
-const getColumnName = (column: nodeSqlParser.ColumnRef): string => {
-  const columnName = column.type === 'column_ref' ? column.column : null;
-  if (!columnName) return '';
-  if (typeof columnName === 'string') return columnName;
-  return String(columnName.expr.value);
-};
 
 const generateCommentNode = (node: ColumnDefinitionNode): Comment | null => {
   // NOTE: nodeSqlParser の型定義では `node.comment` は string 型だが、実際には ValueExpr 型であるため、`as unknown as ValueExpr` を使用

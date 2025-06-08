@@ -11,7 +11,7 @@ const sqlFile = fs.readFileSync('sample.sql', 'utf-8');
 const replacedSql = sqlFile.replace(/BINARY/g, '');
 const ast = parser.astify(replacedSql, { database: 'mysql' });
 
-const ListOfAstNode = (Array.isArray(ast) ? ast : [ast]).reduce<CreateTableNode[]>((acc, node) => {
+const listOfAstNode = (Array.isArray(ast) ? ast : [ast]).reduce<CreateTableNode[]>((acc, node) => {
   switch (node.type) {
     case NODE_TYPES.CREATE: {
       if (node.keyword !== CREATE_NODE_KEYWORDS.TABLE) return acc;
@@ -23,4 +23,4 @@ const ListOfAstNode = (Array.isArray(ast) ? ast : [ast]).reduce<CreateTableNode[
   }
 }, []);
 
-fs.writeFileSync('ast.json', JSON.stringify(ListOfAstNode));
+fs.writeFileSync('ast.json', JSON.stringify(listOfAstNode));
